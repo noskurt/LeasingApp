@@ -10,16 +10,28 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import leasing.app.customer.Customer;
 import leasing.app.vehicle.Vehicle;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "contract")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 public class Contract {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Column(name = "contract_number", nullable = false)
@@ -35,50 +47,4 @@ public class Contract {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private Customer customer;
-
-    public Contract() {
-    }
-
-    public Contract(BigDecimal contractNumber, BigDecimal monthlyRate, Vehicle vehicle, Customer customer) {
-        this.contractNumber = contractNumber;
-        this.monthlyRate = monthlyRate;
-        this.vehicle = vehicle;
-        this.customer = customer;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public BigDecimal getContractNumber() {
-        return contractNumber;
-    }
-
-    public void setContractNumber(BigDecimal contractNumber) {
-        this.contractNumber = contractNumber;
-    }
-
-    public BigDecimal getMonthlyRate() {
-        return monthlyRate;
-    }
-
-    public void setMonthlyRate(BigDecimal monthlyRate) {
-        this.monthlyRate = monthlyRate;
-    }
-
-    public Vehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
 }
