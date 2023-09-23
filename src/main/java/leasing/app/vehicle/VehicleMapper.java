@@ -27,13 +27,12 @@ public class VehicleMapper {
     }
 
     public VehicleGetDto toVehicleGetDto(Vehicle vehicle) {
-        return new VehicleGetDto(
-                vehicle.getId(),
-                vehicle.getBrand(),
-                vehicle.getModel(),
-                vehicle.getYear(),
-                vehicle.getVin(),
-                vehicle.getPrice()
-        );
+        return new VehicleGetDto()
+            .setId(vehicle.getId())
+            .setBrand(vehicle.getBrand())
+            .setModel(vehicle.getModel())
+            .setYear(vehicle.getYear())
+            .setVin(vehicle.getVin())
+            .setPrice(vehicle.getPrice());
     }
 }

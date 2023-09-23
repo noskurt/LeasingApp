@@ -28,7 +28,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class Contract {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)

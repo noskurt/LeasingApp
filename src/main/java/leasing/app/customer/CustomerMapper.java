@@ -23,11 +23,10 @@ public class CustomerMapper {
     }
 
     public CustomerGetDto toCustomerGetDto(Customer customer) {
-        return new CustomerGetDto(
-            customer.getId(),
-            customer.getFirstName(),
-            customer.getLastName(),
-            customer.getBirthdate()
-        );
+        return new CustomerGetDto()
+            .setId(customer.getId())
+            .setFirstName(customer.getFirstName())
+            .setLastName(customer.getLastName())
+            .setBirthdate(customer.getBirthdate());
     }
 }

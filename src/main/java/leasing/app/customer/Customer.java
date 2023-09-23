@@ -24,7 +24,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Setter(AccessLevel.NONE)
