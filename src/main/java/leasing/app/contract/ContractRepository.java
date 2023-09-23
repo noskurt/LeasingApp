@@ -6,4 +6,5 @@ import java.util.UUID;
 
 public interface ContractRepository extends JpaRepository<Contract, UUID> {
     Boolean existsByVehicleId(UUID vehicleId);
+    Boolean existsByCustomerId(UUID customerId);
 }

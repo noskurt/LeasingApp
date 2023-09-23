@@ -2,8 +2,8 @@ package leasing.app.config;
 
 import jakarta.persistence.EntityNotFoundException;
 import leasing.app.exception.ConditionNotMetException;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
