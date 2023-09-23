@@ -52,13 +52,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public void updateVehicle(UUID vehicleId, VehicleUpdateDto vehicleUpdateDto) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(EntityNotFoundException::new);
-
-        vehicle.setBrand(vehicleUpdateDto.getBrand());
-        vehicle.setModel(vehicleUpdateDto.getModel());
-        vehicle.setYear(vehicleUpdateDto.getYear());
-        vehicle.setVin(vehicleUpdateDto.getVin());
-        vehicle.setPrice(vehicleUpdateDto.getPrice());
-
-        vehicleRepository.save(vehicle);
+        Vehicle updatedVehicle = vehicleMapper.toVehicle(vehicle, vehicleUpdateDto);
+        vehicleRepository.save(updatedVehicle);
     }
 }

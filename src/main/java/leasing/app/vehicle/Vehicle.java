@@ -6,16 +6,28 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 @Table(name = "vehicle")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
 public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Column(name = "brand", nullable = false)
@@ -32,66 +44,4 @@ public class Vehicle {
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
-
-    public Vehicle() {
-    }
-
-    public Vehicle(String brand, String model, Integer year, BigDecimal price) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.price = price;
-    }
-
-    public Vehicle(String brand, String model, Integer year, String vin, BigDecimal price) {
-        this.brand = brand;
-        this.model = model;
-        this.year = year;
-        this.vin = vin;
-        this.price = price;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public String getVin() {
-        return vin;
-    }
-
-    public void setVin(String vin) {
-        this.vin = vin;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 }
