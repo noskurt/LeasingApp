@@ -23,7 +23,7 @@ public class ContractController {
 
     private final ContractService contractService;
 
-    @PostMapping("/")
+    @PostMapping
     public void createContract(@RequestBody ContractCreateDto contractCreateDto) {
         contractService.createContract(contractCreateDto);
     }
@@ -33,7 +33,7 @@ public class ContractController {
         return contractService.getContract(contractId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<ContractGetDto> getAllContracts(){
         return contractService.getAllContracts();
     }

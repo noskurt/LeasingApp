@@ -23,7 +23,7 @@ public class CustomerController {
     
     private final CustomerService customerService;
 
-    @PostMapping("/")
+    @PostMapping
     public void createCustomer(@RequestBody CustomerCreateDto customerCreateDto) {
         customerService.createCustomer(customerCreateDto);
     }
@@ -33,7 +33,7 @@ public class CustomerController {
         return customerService.getCustomer(customerId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<CustomerGetDto> getAllCustomers(){
         return customerService.getAllCustomers();
     }

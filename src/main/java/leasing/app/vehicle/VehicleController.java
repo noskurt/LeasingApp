@@ -23,7 +23,7 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
 
-    @PostMapping("/")
+    @PostMapping
     public void createVehicle(@RequestBody VehicleCreateDto vehicleCreateDto) {
         vehicleService.createVehicle(vehicleCreateDto);
     }
@@ -33,7 +33,7 @@ public class VehicleController {
         return vehicleService.getVehicle(vehicleId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<VehicleGetDto> getAllVehicles(){
         return vehicleService.getAllVehicles();
     }
