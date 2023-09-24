@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  backend-app:
+    image: leasing/app:latest
+    build:
+      context: .
+    container_name: leasing-app
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://leasing-db:5432/leasing_database
+      - SPRING_FLYWAY_URL=jdbc:postgresql://leasing-db:5432/leasing_database
+      - SPRING_PROFILES_ACTIVE=${PROFILE}
+    ports:
+      - "8080:8080"
+
   postgres:
     image: postgres:latest
     container_name: leasing-db
