@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +35,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<CustomerGetDto> getAllCustomers() {
         List<Customer> allCustomers = customerRepository.findAll();
-        return allCustomers.stream().map(customerMapper::toCustomerGetDto).collect(Collectors.toList());
+        return allCustomers.stream().map(customerMapper::toCustomerGetDto).toList();
     }
 
     @Override
     public void deleteCustomer(UUID customerId) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
-        Boolean isContractExists = contractRepository.existsByCustomerId(customerId);
+        boolean isContractExists = contractRepository.existsByCustomerId(customerId);
         if (isContractExists) throw new CustomerHasContractException(customerId);
         customerRepository.delete(customer);
     }

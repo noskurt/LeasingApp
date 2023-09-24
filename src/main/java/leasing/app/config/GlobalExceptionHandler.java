@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Objects;
+
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -43,7 +45,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<Object> buildErrorResponse(HttpStatusCode statusCode, String message) {
         ErrorResponse errorResponse = new ErrorResponse()
-            .setStatus(HttpStatus.resolve(statusCode.value()).name())
+            .setStatus(Objects.requireNonNull(HttpStatus.resolve(statusCode.value())).name())
             .setStatusCode(statusCode.value())
             .setMessage(message);
 

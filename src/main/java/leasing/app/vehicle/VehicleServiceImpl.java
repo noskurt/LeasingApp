@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,13 +35,13 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public List<VehicleGetDto> getAllVehicles() {
         List<Vehicle> allVehicles = vehicleRepository.findAll();
-        return allVehicles.stream().map(vehicleMapper::toVehicleGetDto).collect(Collectors.toList());
+        return allVehicles.stream().map(vehicleMapper::toVehicleGetDto).toList();
     }
 
     @Override
     public void deleteVehicle(UUID vehicleId) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new VehicleNotFoundException(vehicleId));
-        Boolean isContractExists = contractRepository.existsByVehicleId(vehicleId);
+        boolean isContractExists = contractRepository.existsByVehicleId(vehicleId);
         if (isContractExists) throw new VehicleHasContractException(vehicleId);
         vehicleRepository.delete(vehicle);
     }

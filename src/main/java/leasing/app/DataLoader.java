@@ -41,7 +41,7 @@ public class DataLoader implements ApplicationRunner {
 
         List<Vehicle> vehicles = createRandomVehicle(10);
         List<Customer> customers = createRandomCustomer(10);
-        List<Contract> contracts = createRandomContract(vehicles, customers, 5);
+        createRandomContract(vehicles, customers, 5);
 
         log.info("Data loader finished!");
     }
