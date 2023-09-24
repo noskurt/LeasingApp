@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("/vehicles")
 public class VehicleController {
 
     private final VehicleService vehicleService;
@@ -35,7 +35,7 @@ public class VehicleController {
         return vehicleService.getVehicle(vehicleId);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<VehicleGetDto> getAllVehicles(){
         return vehicleService.getAllVehicles();
     }

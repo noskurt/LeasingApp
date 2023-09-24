@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
     
     private final CustomerService customerService;
@@ -35,7 +35,7 @@ public class CustomerController {
         return customerService.getCustomer(customerId);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<CustomerGetDto> getAllCustomers(){
         return customerService.getAllCustomers();
     }

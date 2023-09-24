@@ -6,9 +6,8 @@ import leasing.app.customer.Customer;
 import leasing.app.customer.CustomerRepository;
 import leasing.app.vehicle.Vehicle;
 import leasing.app.vehicle.VehicleRepository;
+import lombok.extern.java.Log;
 import net.datafaker.Faker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -19,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@Log
 @Component
 @Profile("load-data")
 public class DataLoader implements ApplicationRunner {
@@ -29,8 +29,6 @@ public class DataLoader implements ApplicationRunner {
 
     private static final Faker faker = new Faker(Locale.ENGLISH);
 
-    private static final Logger logger = LoggerFactory.getLogger(DataLoader.class);
-
     public DataLoader(VehicleRepository vehicleRepository, CustomerRepository customerRepository, ContractRepository contractRepository) {
         this.vehicleRepository = vehicleRepository;
         this.customerRepository = customerRepository;
@@ -39,7 +37,7 @@ public class DataLoader implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        logger.info("Data loader started!");
+        log.info("Data loader started!");
 
         contractRepository.deleteAll();
         customerRepository.deleteAll();
@@ -49,7 +47,7 @@ public class DataLoader implements ApplicationRunner {
         List<Customer> customers = createRandomCustomer(10);
         List<Contract> contracts = createRandomContract(vehicles, customers, 5);
 
-        logger.info("Data loader finished!");
+        log.info("Data loader finished!");
     }
 
     private List<Vehicle> createRandomVehicle(Integer size) {

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/contract")
+@RequestMapping("/contracts")
 public class ContractController {
 
     private final ContractService contractService;
@@ -35,7 +35,7 @@ public class ContractController {
         return contractService.getContract(contractId);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<ContractGetDto> getAllContracts(){
         return contractService.getAllContracts();
     }
