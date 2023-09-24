@@ -3,36 +3,15 @@ package leasing.app.vehicle;
 import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class VehicleMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface VehicleMapper {
+    Vehicle toVehicle(VehicleCreateDto vehicleCreateDto);
 
-    public Vehicle toVehicle(VehicleCreateDto vehicleCreateDto) {
-        return new Vehicle()
-            .setBrand(vehicleCreateDto.getBrand())
-            .setModel(vehicleCreateDto.getModel())
-            .setYear(vehicleCreateDto.getYear())
-            .setVin(vehicleCreateDto.getVin())
-            .setPrice(vehicleCreateDto.getPrice());
-    }
+    Vehicle toVehicle(@MappingTarget Vehicle vehicle, VehicleUpdateDto vehicleUpdateDto);
 
-    public Vehicle toVehicle(Vehicle vehicle, VehicleUpdateDto vehicleUpdateDto) {
-        return vehicle
-            .setBrand(vehicleUpdateDto.getBrand())
-            .setModel(vehicleUpdateDto.getModel())
-            .setYear(vehicleUpdateDto.getYear())
-            .setVin(vehicleUpdateDto.getVin())
-            .setPrice(vehicleUpdateDto.getPrice());
-    }
-
-    public VehicleGetDto toVehicleGetDto(Vehicle vehicle) {
-        return new VehicleGetDto()
-            .setId(vehicle.getId())
-            .setBrand(vehicle.getBrand())
-            .setModel(vehicle.getModel())
-            .setYear(vehicle.getYear())
-            .setVin(vehicle.getVin())
-            .setPrice(vehicle.getPrice());
-    }
+    VehicleGetDto toVehicleGetDto(Vehicle vehicle);
 }

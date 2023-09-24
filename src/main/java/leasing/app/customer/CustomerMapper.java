@@ -3,30 +3,15 @@ package leasing.app.customer;
 import leasing.app.customer.dto.request.CustomerCreateDto;
 import leasing.app.customer.dto.request.CustomerUpdateDto;
 import leasing.app.customer.dto.response.CustomerGetDto;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class CustomerMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface CustomerMapper {
+    Customer toCustomer(CustomerCreateDto customerCreateDto);
 
-    public Customer toCustomer(CustomerCreateDto customerCreateDto) {
-        return new Customer()
-            .setFirstName(customerCreateDto.getFirstName())
-            .setLastName(customerCreateDto.getLastName())
-            .setBirthdate(customerCreateDto.getBirthdate());
-    }
+    Customer toCustomer(@MappingTarget Customer customer, CustomerUpdateDto customerUpdateDto);
 
-    public Customer toCustomer(Customer customer, CustomerUpdateDto customerUpdateDto) {
-        return customer
-            .setFirstName(customerUpdateDto.getFirstName())
-            .setLastName(customerUpdateDto.getLastName())
-            .setBirthdate(customerUpdateDto.getBirthdate());
-    }
-
-    public CustomerGetDto toCustomerGetDto(Customer customer) {
-        return new CustomerGetDto()
-            .setId(customer.getId())
-            .setFirstName(customer.getFirstName())
-            .setLastName(customer.getLastName())
-            .setBirthdate(customer.getBirthdate());
-    }
+    CustomerGetDto toCustomerGetDto(Customer customer);
 }

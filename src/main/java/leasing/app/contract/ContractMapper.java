@@ -5,51 +5,16 @@ import leasing.app.contract.dto.request.ContractUpdateDto;
 import leasing.app.contract.dto.response.ContractGetDto;
 import leasing.app.customer.Customer;
 import leasing.app.vehicle.Vehicle;
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.MappingTarget;
 
-@Component
-public class ContractMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface ContractMapper {
 
-    public Contract toContract(ContractCreateDto contractCreateDto, Vehicle vehicle, Customer customer) {
-        return new Contract()
-            .setContractNumber(contractCreateDto.getContractNumber())
-            .setMonthlyRate(contractCreateDto.getMonthlyRate())
-            .setVehicle(vehicle)
-            .setCustomer(customer);
-    }
+    Contract toContract(ContractCreateDto contractCreateDto, Vehicle vehicle, Customer customer);
 
-    public Contract toContract(Contract contract, Vehicle vehicle, Customer customer, ContractUpdateDto contractUpdateDto) {
-        return contract
-            .setContractNumber(contractUpdateDto.getContractNumber())
-            .setMonthlyRate(contractUpdateDto.getMonthlyRate())
-            .setCustomer(customer)
-            .setVehicle(vehicle);
-    }
+    Contract toContract(@MappingTarget Contract contract, Vehicle vehicle, Customer customer, ContractUpdateDto contractUpdateDto);
 
-    public ContractGetDto toContractGetDto(Contract contract) {
-        return new ContractGetDto()
-            .setId(contract.getId())
-            .setContractNumber(contract.getContractNumber())
-            .setMonthlyRate(contract.getMonthlyRate())
-            .setVehicle(toVehicleDto(contract.getVehicle()))
-            .setCustomer(toCustomerDto(contract.getCustomer()));
-    }
-
-    private ContractGetDto.VehicleDto toVehicleDto(Vehicle vehicle) {
-        return new ContractGetDto.VehicleDto()
-            .setId(vehicle.getId())
-            .setBrand(vehicle.getBrand())
-            .setModel(vehicle.getModel())
-            .setYear(vehicle.getYear())
-            .setVin(vehicle.getVin())
-            .setPrice(vehicle.getPrice());
-    }
-
-    private ContractGetDto.CustomerDto toCustomerDto(Customer customer) {
-        return new ContractGetDto.CustomerDto()
-            .setId(customer.getId())
-            .setFirstName(customer.getFirstName())
-            .setLastName(customer.getLastName())
-            .setBirthdate(customer.getBirthdate());
-    }
+    ContractGetDto toContractGetDto(Contract contract);
 }
