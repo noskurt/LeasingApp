@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -14,5 +14,5 @@ public class CustomerGetDto {
     private UUID id;
     private String firstName;
     private String lastName;
-    private Date birthdate;
+    private LocalDate birthdate;
 }

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -19,7 +19,6 @@ public class ContractGetDto {
     private CustomerDto customer;
 
     @Data
-    
     @NoArgsConstructor
     @Accessors(chain = true)
     public static class VehicleDto {
@@ -32,13 +31,12 @@ public class ContractGetDto {
     }
 
     @Data
-    
     @NoArgsConstructor
     @Accessors(chain = true)
     public static class CustomerDto {
         private UUID id;
         private String firstName;
         private String lastName;
-        private Date birthdate;
+        private LocalDate birthdate;
     }
 }

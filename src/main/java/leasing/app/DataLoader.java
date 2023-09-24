@@ -72,7 +72,7 @@ public class DataLoader implements ApplicationRunner {
             Customer customer = new Customer()
                 .setFirstName(faker.name().firstName())
                 .setLastName(faker.name().lastName())
-                .setBirthdate(faker.date().birthday());
+                .setBirthdate(faker.date().birthday().toLocalDateTime().toLocalDate());
             customerList.add(customer);
         }
 

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -12,5 +12,5 @@ import java.util.Date;
 public class CustomerUpdateDto {
     private String firstName;
     private String lastName;
-    private Date birthdate;
+    private LocalDate birthdate;
 }
