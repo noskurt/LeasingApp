@@ -3,6 +3,7 @@ package leasing.app.vehicle;
 import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/vehicles")
 public class VehicleController {
 
     private final VehicleService vehicleService;
-
-    public VehicleController(VehicleService vehicleService) {
-        this.vehicleService = vehicleService;
-    }
 
     @PostMapping("/")
     public void createVehicle(@RequestBody VehicleCreateDto vehicleCreateDto) {

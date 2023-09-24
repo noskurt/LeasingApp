@@ -3,6 +3,7 @@ package leasing.app.customer;
 import leasing.app.customer.dto.request.CustomerCreateDto;
 import leasing.app.customer.dto.request.CustomerUpdateDto;
 import leasing.app.customer.dto.response.CustomerGetDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/customers")
 public class CustomerController {
     
     private final CustomerService customerService;
-
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
 
     @PostMapping("/")
     public void createCustomer(@RequestBody CustomerCreateDto customerCreateDto) {

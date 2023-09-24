@@ -6,6 +6,7 @@ import leasing.app.customer.Customer;
 import leasing.app.customer.CustomerRepository;
 import leasing.app.vehicle.Vehicle;
 import leasing.app.vehicle.VehicleRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import net.datafaker.Faker;
 import org.springframework.boot.ApplicationArguments;
@@ -21,6 +22,7 @@ import java.util.Locale;
 @Log
 @Component
 @Profile("load-data")
+@RequiredArgsConstructor
 public class DataLoader implements ApplicationRunner {
 
     private final VehicleRepository vehicleRepository;
@@ -28,12 +30,6 @@ public class DataLoader implements ApplicationRunner {
     private final ContractRepository contractRepository;
 
     private static final Faker faker = new Faker(Locale.ENGLISH);
-
-    public DataLoader(VehicleRepository vehicleRepository, CustomerRepository customerRepository, ContractRepository contractRepository) {
-        this.vehicleRepository = vehicleRepository;
-        this.customerRepository = customerRepository;
-        this.contractRepository = contractRepository;
-    }
 
     @Override
     public void run(ApplicationArguments args) {

@@ -3,6 +3,7 @@ package leasing.app.contract;
 import leasing.app.contract.dto.request.ContractCreateDto;
 import leasing.app.contract.dto.request.ContractUpdateDto;
 import leasing.app.contract.dto.response.ContractGetDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,14 +17,11 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/contracts")
 public class ContractController {
 
     private final ContractService contractService;
-
-    public ContractController(ContractService contractService) {
-        this.contractService = contractService;
-    }
 
     @PostMapping("/")
     public void createContract(@RequestBody ContractCreateDto contractCreateDto) {

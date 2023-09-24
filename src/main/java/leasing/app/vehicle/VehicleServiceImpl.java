@@ -6,6 +6,7 @@ import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
 import leasing.app.vehicle.exception.VehicleHasContractException;
 import leasing.app.vehicle.exception.VehicleNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,17 +14,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final ContractRepository contractRepository;
     private final VehicleMapper vehicleMapper;
-
-    public VehicleServiceImpl(VehicleRepository vehicleRepository, ContractRepository contractRepository, VehicleMapper vehicleMapper) {
-        this.vehicleRepository = vehicleRepository;
-        this.contractRepository = contractRepository;
-        this.vehicleMapper = vehicleMapper;
-    }
 
     @Override
     public void createVehicle(VehicleCreateDto vehicleCreateDto) {

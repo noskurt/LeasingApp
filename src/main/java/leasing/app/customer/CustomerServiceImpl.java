@@ -6,6 +6,7 @@ import leasing.app.customer.dto.request.CustomerUpdateDto;
 import leasing.app.customer.dto.response.CustomerGetDto;
 import leasing.app.customer.exception.CustomerHasContractException;
 import leasing.app.customer.exception.CustomerNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,17 +14,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final ContractRepository contractRepository;
     private final CustomerMapper customerMapper;
-
-    public CustomerServiceImpl(CustomerRepository customerRepository, ContractRepository contractRepository, CustomerMapper customerMapper) {
-        this.customerRepository = customerRepository;
-        this.contractRepository = contractRepository;
-        this.customerMapper = customerMapper;
-    }
 
     @Override
     public void createCustomer(CustomerCreateDto customerCreateDto) {
