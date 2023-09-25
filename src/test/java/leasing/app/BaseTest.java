@@ -94,13 +94,13 @@ public class BaseTest {
             .andExpect(resultMatcher);
     }
 
-    private MockHttpServletRequestBuilder getRequestBuilder(String url, Object... urlVariables) {
+    private MockHttpServletRequestBuilder getRequestBuilder(String url, Object... urlVariables) throws Exception {
         return MockMvcRequestBuilders.get(url, urlVariables)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON);
     }
 
-    private MockHttpServletRequestBuilder deleteRequestBuilder(String url, Object... urlVariables) {
+    private MockHttpServletRequestBuilder deleteRequestBuilder(String url, Object... urlVariables) throws Exception {
         return MockMvcRequestBuilders.delete(url, urlVariables)
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON);

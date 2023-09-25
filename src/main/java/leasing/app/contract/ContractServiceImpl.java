@@ -11,34 +11,28 @@ import leasing.app.customer.exception.CustomerNotFoundException;
 import leasing.app.vehicle.Vehicle;
 import leasing.app.vehicle.VehicleRepository;
 import leasing.app.vehicle.exception.VehicleNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ContractServiceImpl implements ContractService {
 
     private final ContractRepository contractRepository;
-    private final VehicleRepository vehicleRepository;
     private final CustomerRepository customerRepository;
+    private final VehicleRepository vehicleRepository;
     private final ContractMapper contractMapper;
-
-    public ContractServiceImpl(ContractRepository contractRepository, VehicleRepository vehicleRepository, CustomerRepository customerRepository, ContractMapper contractMapper) {
-        this.contractRepository = contractRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.customerRepository = customerRepository;
-        this.contractMapper = contractMapper;
-    }
 
     @Override
     public void createContract(ContractCreateDto contractCreateDto) {
+        boolean isVehicleAssigned = contractRepository.existsByVehicleId(contractCreateDto.getVehicleId());
+        if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(contractCreateDto.getVehicleId());
+
         Vehicle vehicle = vehicleRepository.findById(contractCreateDto.getVehicleId()).orElseThrow(() -> new VehicleNotFoundException(contractCreateDto.getVehicleId()));
         Customer customer = customerRepository.findById(contractCreateDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException(contractCreateDto.getCustomerId()));
-
-        Boolean isVehicleAssigned = contractRepository.existsByVehicleId(contractCreateDto.getVehicleId());
-        if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(vehicle.getId());
 
         Contract contract = contractMapper.toContract(contractCreateDto, vehicle, customer);
         contractRepository.save(contract);
@@ -53,7 +47,7 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public List<ContractGetDto> getAllContracts() {
         List<Contract> allContracts = contractRepository.findAll();
-        return allContracts.stream().map(contractMapper::toContractGetDto).collect(Collectors.toList());
+        return allContracts.stream().map(contractMapper::toContractGetDto).toList();
     }
 
     @Override
@@ -65,6 +59,12 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void updateContract(UUID contractId, ContractUpdateDto contractUpdateDto) {
         Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new ContractNotFoundException(contractId));
+
+        if (contract.getVehicle().getId() != contractUpdateDto.getVehicleId()) {
+            boolean isVehicleAssigned = contractRepository.existsByVehicleId(contractUpdateDto.getVehicleId());
+            if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(contractUpdateDto.getVehicleId());
+        }
+
         Vehicle vehicle = vehicleRepository.findById(contractUpdateDto.getVehicleId()).orElseThrow(() -> new VehicleNotFoundException(contractUpdateDto.getVehicleId()));
         Customer customer = customerRepository.findById(contractUpdateDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException(contractUpdateDto.getCustomerId()));
 
