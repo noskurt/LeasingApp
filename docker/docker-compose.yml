@@ -16,7 +16,7 @@ services:
       - "8080:8080"
 
   postgres:
-    image: postgres:latest
+    image: postgres:15.4-alpine
     container_name: leasing-db
     environment:
       POSTGRES_DB: leasing_database
@@ -25,6 +25,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
 
 volumes:

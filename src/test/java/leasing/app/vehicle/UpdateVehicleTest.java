@@ -3,20 +3,18 @@ package leasing.app.vehicle;
 import leasing.app.BaseTest;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UpdateVehicleTest extends BaseTest {
 
     @Test
-    void testUpdateVehicleEndpointReturnsSuccess() throws Exception {
+    void testUpdateVehicleReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
 
         String brand = faker.vehicle().make();
@@ -29,11 +27,7 @@ class UpdateVehicleTest extends BaseTest {
             .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
             .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
 
-        mockMvc.perform(put("/vehicles/{vehicleId}", vehicle.getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(vehicleUpdateDto)))
-            .andExpect(status().isOk());
+        performAndPut(mockMvc, status().isOk(), vehicleUpdateDto, "/vehicles/{vehicleId}", vehicle.getId());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findAll().stream().findFirst();
 
@@ -46,7 +40,7 @@ class UpdateVehicleTest extends BaseTest {
     }
 
     @Test
-    void testUpdateVehicleEndpointReturnsNotFound() throws Exception {
+    void testUpdateVehicleReturnsNotFound() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
 
         String brand = faker.vehicle().make();
@@ -59,11 +53,7 @@ class UpdateVehicleTest extends BaseTest {
             .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
             .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
 
-        mockMvc.perform(put("/vehicles/{vehicleId}", UUID.randomUUID())
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(vehicleUpdateDto)))
-            .andExpect(status().isNotFound());
+        performAndPut(mockMvc, status().isNotFound(), vehicleUpdateDto, "/vehicles/{vehicleId}", UUID.randomUUID());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findAll().stream().findFirst();
 

@@ -3,30 +3,21 @@ package leasing.app.vehicle;
 import leasing.app.BaseTest;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class GetAllVehicleTest extends BaseTest {
 
     @Test
-    void testGetAllVehicleEndpointReturnsSuccess() throws Exception {
+    void testGetAllVehicleReturnsSuccess() throws Exception {
         Vehicle vehicleFirst = dataCreator.createVehicle();
         Vehicle vehicleSecond = dataCreator.createVehicle();
 
-        MvcResult mvcResult = mockMvc.perform(get("/vehicles")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andReturn();
-
-        List<VehicleGetDto> result = andReturnResultList(mvcResult, VehicleGetDto.class);
+        List<VehicleGetDto> result = performAndGetResultList(mockMvc, VehicleGetDto.class, status().isOk(), "/vehicles");
 
         assertThat(result).hasSize(2);
 
