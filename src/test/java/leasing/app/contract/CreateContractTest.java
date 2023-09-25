@@ -3,7 +3,6 @@ package leasing.app.contract;
 import leasing.app.BaseTest;
 import leasing.app.contract.dto.request.ContractCreateDto;
 import leasing.app.customer.Customer;
-import leasing.app.customer.dto.request.CustomerCreateDto;
 import leasing.app.vehicle.Vehicle;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class CreateContractTest extends BaseTest {
 
+    private static final String URL = "/contracts";
+
     @Test
     void testCreateContractReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
@@ -28,7 +29,7 @@ class CreateContractTest extends BaseTest {
             .setCustomerId(customer.getId())
             .setVehicleId(vehicle.getId());
 
-        performAndPost(mockMvc, status().isOk(), contractCreateDto, "/contracts");
+        performAndPost(mockMvc, status().isOk(), contractCreateDto, URL);
 
         Optional<Contract> contract = contractRepository.findAll().stream().findFirst();
 
@@ -51,7 +52,7 @@ class CreateContractTest extends BaseTest {
             .setCustomerId(customer.getId())
             .setVehicleId(vehicle.getId());
 
-        performAndPost(mockMvc, status().isPreconditionFailed(), contractCreateDto, "/contracts");
+        performAndPost(mockMvc, status().isPreconditionFailed(), contractCreateDto, URL);
 
         List<Contract> contract = contractRepository.findAll();
 
@@ -68,7 +69,7 @@ class CreateContractTest extends BaseTest {
             .setCustomerId(customer.getId())
             .setVehicleId(UUID.randomUUID());
 
-        performAndPost(mockMvc, status().isNotFound(), contractCreateDto, "/contracts");
+        performAndPost(mockMvc, status().isNotFound(), contractCreateDto, URL);
 
         List<Contract> contract = contractRepository.findAll();
 
@@ -85,7 +86,7 @@ class CreateContractTest extends BaseTest {
             .setCustomerId(UUID.randomUUID())
             .setVehicleId(vehicle.getId());
 
-        performAndPost(mockMvc, status().isNotFound(), contractCreateDto, "/contracts");
+        performAndPost(mockMvc, status().isNotFound(), contractCreateDto, URL);
 
         List<Contract> contract = contractRepository.findAll();
 

@@ -12,11 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DeleteVehicleTest extends BaseTest {
 
+    private static final String URL = "/vehicles/{vehicleId}";
+
     @Test
     void testDeleteVehicleReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
 
-        performAndDelete(mockMvc, status().isOk(), "/vehicles/{vehicleId}", vehicle.getId());
+        performAndDelete(mockMvc, status().isOk(), URL, vehicle.getId());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findById(vehicle.getId());
         assertThat(vehicleRecord).isNotPresent();
@@ -26,7 +28,7 @@ class DeleteVehicleTest extends BaseTest {
     void testDeleteVehicleReturnsNotFound() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
 
-        performAndDelete(mockMvc, status().isNotFound(), "/vehicles/{vehicleId}", UUID.randomUUID());
+        performAndDelete(mockMvc, status().isNotFound(), URL, UUID.randomUUID());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findById(vehicle.getId());
         assertThat(vehicleRecord).isPresent();
@@ -38,7 +40,7 @@ class DeleteVehicleTest extends BaseTest {
         Customer customer = dataCreator.createCustomer();
         dataCreator.createContract(vehicle, customer);
 
-        performAndDelete(mockMvc, status().isPreconditionFailed(), "/vehicles/{vehicleId}", vehicle.getId());
+        performAndDelete(mockMvc, status().isPreconditionFailed(), URL, vehicle.getId());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findById(vehicle.getId());
         assertThat(vehicleRecord).isPresent();

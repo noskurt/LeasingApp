@@ -13,6 +13,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UpdateVehicleTest extends BaseTest {
 
+    private static final String URL = "/vehicles/{vehicleId}";
+
     @Test
     void testUpdateVehicleReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
@@ -27,7 +29,7 @@ class UpdateVehicleTest extends BaseTest {
             .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
             .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
 
-        performAndPut(mockMvc, status().isOk(), vehicleUpdateDto, "/vehicles/{vehicleId}", vehicle.getId());
+        performAndPut(mockMvc, status().isOk(), vehicleUpdateDto, URL, vehicle.getId());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findAll().stream().findFirst();
 
@@ -53,7 +55,7 @@ class UpdateVehicleTest extends BaseTest {
             .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
             .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
 
-        performAndPut(mockMvc, status().isNotFound(), vehicleUpdateDto, "/vehicles/{vehicleId}", UUID.randomUUID());
+        performAndPut(mockMvc, status().isNotFound(), vehicleUpdateDto, URL, UUID.randomUUID());
 
         Optional<Vehicle> vehicleRecord = vehicleRepository.findAll().stream().findFirst();
 

@@ -11,11 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetVehicleTest extends BaseTest {
 
+    private static final String URL = "/vehicles/{vehicleId}";
+
     @Test
     void testGetVehicleAndReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
 
-        VehicleGetDto result = performAndGetResult(mockMvc, VehicleGetDto.class, status().isOk(), "/vehicles/{vehicleId}", vehicle.getId());
+        VehicleGetDto result = performAndGetResult(mockMvc, VehicleGetDto.class, status().isOk(), URL, vehicle.getId());
 
         assertThat(vehicle.getId()).isEqualTo(result.getId());
         assertThat(vehicle.getBrand()).isEqualTo(result.getBrand());
@@ -27,6 +29,6 @@ class GetVehicleTest extends BaseTest {
 
     @Test
     void testGetVehicleReturnsNotFound() throws Exception {
-        performAndGetResult(mockMvc, VehicleGetDto.class, status().isNotFound(), "/vehicles/{vehicleId}", UUID.randomUUID());
+        performAndGetResult(mockMvc, VehicleGetDto.class, status().isNotFound(), URL, UUID.randomUUID());
     }
 }

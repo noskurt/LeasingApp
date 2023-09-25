@@ -12,11 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class DeleteCustomerTest extends BaseTest {
 
+    private static final String URL = "/customers/{customerId}";
+
     @Test
     void testDeleteCustomerReturnsSuccess() throws Exception {
         Customer customer = dataCreator.createCustomer();
 
-        performAndDelete(mockMvc, status().isOk(), "/customers/{customerId}", customer.getId());
+        performAndDelete(mockMvc, status().isOk(), URL, customer.getId());
 
         Optional<Customer> customerRecord = customerRepository.findById(customer.getId());
         assertThat(customerRecord).isNotPresent();
@@ -26,7 +28,7 @@ class DeleteCustomerTest extends BaseTest {
     void testDeleteCustomerReturnsNotFound() throws Exception {
         Customer customer = dataCreator.createCustomer();
 
-        performAndDelete(mockMvc, status().isNotFound(), "/customers/{customerId}", UUID.randomUUID());
+        performAndDelete(mockMvc, status().isNotFound(), URL, UUID.randomUUID());
 
         Optional<Customer> customerRecord = customerRepository.findById(customer.getId());
         assertThat(customerRecord).isPresent();
@@ -38,7 +40,7 @@ class DeleteCustomerTest extends BaseTest {
         Customer customer = dataCreator.createCustomer();
         dataCreator.createContract(vehicle, customer);
 
-        performAndDelete(mockMvc, status().isPreconditionFailed(), "/customers/{customerId}", customer.getId());
+        performAndDelete(mockMvc, status().isPreconditionFailed(), URL, customer.getId());
 
         Optional<Customer> customerRecord = customerRepository.findById(customer.getId());
         assertThat(customerRecord).isPresent();

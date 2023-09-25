@@ -11,11 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetCustomerTest extends BaseTest {
 
+    private static final String URL = "/customers/{customerId}";
+
     @Test
     void testGetCustomerAndReturnsSuccess() throws Exception {
         Customer customer = dataCreator.createCustomer();
 
-        CustomerGetDto result = performAndGetResult(mockMvc, CustomerGetDto.class, status().isOk(), "/customers/{customerId}", customer.getId());
+        CustomerGetDto result = performAndGetResult(mockMvc, CustomerGetDto.class, status().isOk(), URL, customer.getId());
 
         assertThat(customer.getId()).isEqualTo(result.getId());
         assertThat(customer.getFirstName()).isEqualTo(result.getFirstName());
@@ -25,6 +27,6 @@ class GetCustomerTest extends BaseTest {
 
     @Test
     void testGetCustomerReturnsNotFound() throws Exception {
-        performAndGetResult(mockMvc, CustomerGetDto.class, status().isNotFound(), "/customers/{customerId}", UUID.randomUUID());
+        performAndGetResult(mockMvc, CustomerGetDto.class, status().isNotFound(), URL, UUID.randomUUID());
     }
 }

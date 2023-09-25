@@ -1,10 +1,8 @@
 package leasing.app.contract;
 
 import leasing.app.BaseTest;
-import leasing.app.contract.dto.request.ContractCreateDto;
 import leasing.app.contract.dto.request.ContractUpdateDto;
 import leasing.app.customer.Customer;
-import leasing.app.customer.dto.request.CustomerUpdateDto;
 import leasing.app.vehicle.Vehicle;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UpdateContractTest extends BaseTest {
+
+    private static final String URL = "/contracts/{contractId}";
 
     @Test
     void testUpdateContractReturnsSuccess() throws Exception {
@@ -32,7 +32,7 @@ class UpdateContractTest extends BaseTest {
             .setCustomerId(candidateCustomer.getId())
             .setVehicleId(candidateVehicle.getId());
 
-        performAndPut(mockMvc, status().isOk(), contractUpdateDto, "/contracts/{contractId}", contract.getId());
+        performAndPut(mockMvc, status().isOk(), contractUpdateDto, URL, contract.getId());
 
         Optional<Contract> contractRecord = contractRepository.findAll().stream().filter(e -> e.getId().equals(contract.getId())).findFirst();
 
@@ -58,7 +58,7 @@ class UpdateContractTest extends BaseTest {
             .setCustomerId(candidateCustomer.getId())
             .setVehicleId(candidateVehicle.getId());
 
-        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, "/contracts/{contractId}", UUID.randomUUID());
+        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, URL, UUID.randomUUID());
 
         Optional<Contract> contractRecord = contractRepository.findAll().stream().findFirst();
 
@@ -85,7 +85,7 @@ class UpdateContractTest extends BaseTest {
             .setCustomerId(candidateCustomer.getId())
             .setVehicleId(candidateVehicle.getId());
 
-        performAndPut(mockMvc, status().isPreconditionFailed(), contractUpdateDto, "/contracts/{contractId}", contract.getId());
+        performAndPut(mockMvc, status().isPreconditionFailed(), contractUpdateDto, URL, contract.getId());
 
         Optional<Contract> contractRecord = contractRepository.findAll().stream().filter(e -> e.getId().equals(contract.getId())).findFirst();
 
@@ -111,7 +111,7 @@ class UpdateContractTest extends BaseTest {
             .setCustomerId(candidateCustomer.getId())
             .setVehicleId(UUID.randomUUID());
 
-        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, "/contracts/{contractId}", contract.getId());
+        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, URL, contract.getId());
 
         Optional<Contract> contractRecord = contractRepository.findAll().stream().findFirst();
 
@@ -137,7 +137,7 @@ class UpdateContractTest extends BaseTest {
             .setCustomerId(UUID.randomUUID())
             .setVehicleId(candidateVehicle.getId());
 
-        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, "/contracts/{contractId}", contract.getId());
+        performAndPut(mockMvc, status().isNotFound(), contractUpdateDto, URL, contract.getId());
 
         Optional<Contract> contractRecord = contractRepository.findAll().stream().findFirst();
 

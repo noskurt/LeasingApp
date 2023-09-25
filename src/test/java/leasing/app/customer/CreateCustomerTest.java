@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class CreateCustomerTest extends BaseTest {
 
+    private static final String URL = "/customers";
+
     @Test
     void testCreateCustomerReturnsSuccess() throws Exception {
         CustomerCreateDto customerCreateDto = new CustomerCreateDto()
@@ -18,7 +20,7 @@ class CreateCustomerTest extends BaseTest {
             .setLastName(faker.name().lastName())
             .setBirthdate(faker.date().birthday().toLocalDateTime().toLocalDate());
 
-        performAndPost(mockMvc, status().isOk(), customerCreateDto, "/customers");
+        performAndPost(mockMvc, status().isOk(), customerCreateDto, URL);
 
         Optional<Customer> customer = customerRepository.findAll().stream().findFirst();
 

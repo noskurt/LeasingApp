@@ -3,7 +3,6 @@ package leasing.app.contract;
 import leasing.app.BaseTest;
 import leasing.app.contract.dto.response.ContractGetDto;
 import leasing.app.customer.Customer;
-import leasing.app.customer.dto.response.CustomerGetDto;
 import leasing.app.vehicle.Vehicle;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +14,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetAllContractTest extends BaseTest {
 
+    private static final String URL = "/contracts";
+
     @Test
     void testGetAllContractReturnsSuccess() throws Exception {
         Vehicle vehicleFirst = dataCreator.createVehicle();
@@ -25,7 +26,7 @@ class GetAllContractTest extends BaseTest {
         Customer customerSecond = dataCreator.createCustomer();
         Contract contractSecond = dataCreator.createContract(vehicleSecond, customerSecond);
 
-        List<ContractGetDto> result = performAndGetResultList(mockMvc, ContractGetDto.class, status().isOk(), "/contracts");
+        List<ContractGetDto> result = performAndGetResultList(mockMvc, ContractGetDto.class, status().isOk(), URL);
 
         assertThat(result).hasSize(2);
 

@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class CreateVehicleTest extends BaseTest {
 
+    private static final String URL = "/vehicles";
+
     @Test
     void testCreateVehicleReturnsSuccess() throws Exception {
         String brand = faker.vehicle().make();
@@ -24,7 +26,7 @@ class CreateVehicleTest extends BaseTest {
             .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
             .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
 
-        performAndPost(mockMvc, status().isOk(), vehicleCreateDto, "/vehicles");
+        performAndPost(mockMvc, status().isOk(), vehicleCreateDto, URL);
 
         Optional<Vehicle> vehicle = vehicleRepository.findAll().stream().findFirst();
 

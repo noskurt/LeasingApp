@@ -12,6 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class UpdateCustomerTest extends BaseTest {
 
+    private static final String URL = "/customers/{customerId}";
+
     @Test
     void testUpdateCustomerReturnsSuccess() throws Exception {
         Customer customer = dataCreator.createCustomer();
@@ -21,7 +23,7 @@ class UpdateCustomerTest extends BaseTest {
             .setLastName(faker.name().lastName())
             .setBirthdate(faker.date().birthday().toLocalDateTime().toLocalDate());
 
-        performAndPut(mockMvc, status().isOk(), customerUpdateDto, "/customers/{customerId}", customer.getId());
+        performAndPut(mockMvc, status().isOk(), customerUpdateDto, URL, customer.getId());
 
         Optional<Customer> customerRecord = customerRepository.findAll().stream().findFirst();
 
@@ -40,7 +42,7 @@ class UpdateCustomerTest extends BaseTest {
             .setLastName(faker.name().lastName())
             .setBirthdate(faker.date().birthday().toLocalDateTime().toLocalDate());
 
-        performAndPut(mockMvc, status().isNotFound(), customerUpdateDto, "/customers/{customerId}", UUID.randomUUID());
+        performAndPut(mockMvc, status().isNotFound(), customerUpdateDto, URL, UUID.randomUUID());
 
         Optional<Customer> customerRecord = customerRepository.findAll().stream().findFirst();
 

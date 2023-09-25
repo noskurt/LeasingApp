@@ -12,12 +12,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetAllCustomerTest extends BaseTest {
 
+    private static final String URL = "/customers";
+
     @Test
     void testGetAllCustomerReturnsSuccess() throws Exception {
         Customer customerFirst = dataCreator.createCustomer();
         Customer customerSecond = dataCreator.createCustomer();
 
-        List<CustomerGetDto> result = performAndGetResultList(mockMvc, CustomerGetDto.class, status().isOk(), "/customers");
+        List<CustomerGetDto> result = performAndGetResultList(mockMvc, CustomerGetDto.class, status().isOk(), URL);
 
         assertThat(result).hasSize(2);
 

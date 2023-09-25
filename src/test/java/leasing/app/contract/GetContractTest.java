@@ -13,13 +13,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class GetContractTest extends BaseTest {
 
+    private static final String URL = "/contracts/{contractId}";
+
     @Test
     void testGetContractAndReturnsSuccess() throws Exception {
         Vehicle vehicle = dataCreator.createVehicle();
         Customer customer = dataCreator.createCustomer();
         Contract contract = dataCreator.createContract(vehicle, customer);
 
-        ContractGetDto result = performAndGetResult(mockMvc, ContractGetDto.class, status().isOk(), "/contracts/{contractId}", contract.getId());
+        ContractGetDto result = performAndGetResult(mockMvc, ContractGetDto.class, status().isOk(), URL, contract.getId());
 
         assertThat(contract.getId()).isEqualTo(result.getId());
         assertThat(contract.getContractNumber()).isEqualTo(result.getContractNumber());
@@ -30,6 +32,6 @@ class GetContractTest extends BaseTest {
 
     @Test
     void testGetContractReturnsNotFound() throws Exception {
-        performAndGetResult(mockMvc, ContractGetDto.class, status().isNotFound(), "/contracts/{contractId}", UUID.randomUUID());
+        performAndGetResult(mockMvc, ContractGetDto.class, status().isNotFound(), URL, UUID.randomUUID());
     }
 }
