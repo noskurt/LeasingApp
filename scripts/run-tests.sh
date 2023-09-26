@@ -3,7 +3,7 @@
 set -eo pipefail
 
 printHelp() {
-    echo "This script is for running all tests in Spring Application."
+    echo "This script is for running all tests in Spring Application with Docker container."
     echo ""
     echo "Options:"
     echo "  -h    Print this"
@@ -27,5 +27,5 @@ while :; do
     shift
 done
 
-cd ../docker && docker-compose up postgres -d
+cd ../docker && PROFILE="$PROFILE" docker-compose up postgres -d
 cd ../ && ./gradlew test
