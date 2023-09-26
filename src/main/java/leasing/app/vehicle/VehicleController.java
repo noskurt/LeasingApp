@@ -1,6 +1,9 @@
 package leasing.app.vehicle;
 
 import jakarta.validation.Valid;
+import leasing.app.meta_data.MetaDataService;
+import leasing.app.meta_data.dto.response.BrandGetDto;
+import leasing.app.meta_data.dto.response.ModelGetDto;
 import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
@@ -23,6 +26,7 @@ import java.util.UUID;
 public class VehicleController {
 
     private final VehicleService vehicleService;
+    private final MetaDataService metaDataService;
 
     @PostMapping
     public void createVehicle(@Valid @RequestBody VehicleCreateDto vehicleCreateDto) {
@@ -47,6 +51,16 @@ public class VehicleController {
     @PutMapping("/{vehicleId}")
     public void updateVehicle(@PathVariable UUID vehicleId, @Valid @RequestBody VehicleUpdateDto vehicleUpdateDto) {
         vehicleService.updateVehicle(vehicleId, vehicleUpdateDto);
+    }
+
+    @GetMapping("/brands")
+    public List<BrandGetDto> getAllBrands() {
+        return metaDataService.getAllBrands();
+    }
+
+    @GetMapping("/brands/{brandId}/models")
+    public List<ModelGetDto> getModelByBrandId(@PathVariable UUID brandId) {
+        return metaDataService.getModelByBrandId(brandId);
     }
 
 }

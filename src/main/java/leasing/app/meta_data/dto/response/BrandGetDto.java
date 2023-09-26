@@ -1,0 +1,15 @@
+package leasing.app.meta_data.dto.response;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@Accessors(chain = true)
+public class BrandGetDto {
+    private UUID id;
+    private String name;
+}

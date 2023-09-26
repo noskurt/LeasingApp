@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import leasing.app.contract.ContractRepository;
 import leasing.app.customer.CustomerRepository;
+import leasing.app.meta_data.BrandRepository;
+import leasing.app.meta_data.ModelRepository;
 import leasing.app.vehicle.VehicleRepository;
 import net.datafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,6 +48,12 @@ public class BaseTest {
 
     @Autowired
     protected ContractRepository contractRepository;
+
+    @Autowired
+    protected BrandRepository brandRepository;
+
+    @Autowired
+    protected ModelRepository modelRepository;
 
     protected static final Faker faker = new Faker(Locale.ENGLISH);
 
