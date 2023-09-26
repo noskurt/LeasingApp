@@ -1,5 +1,6 @@
 package leasing.app.customer;
 
+import jakarta.validation.Valid;
 import leasing.app.customer.dto.request.CustomerCreateDto;
 import leasing.app.customer.dto.request.CustomerUpdateDto;
 import leasing.app.customer.dto.response.CustomerGetDto;
@@ -24,7 +25,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping
-    public void createCustomer(@RequestBody CustomerCreateDto customerCreateDto) {
+    public void createCustomer(@Valid @RequestBody CustomerCreateDto customerCreateDto) {
         customerService.createCustomer(customerCreateDto);
     }
 
@@ -44,7 +45,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{customerId}")
-    public void updateCustomer(@PathVariable UUID customerId, @RequestBody CustomerUpdateDto customerUpdateDto){
+    public void updateCustomer(@PathVariable UUID customerId, @Valid @RequestBody CustomerUpdateDto customerUpdateDto){
         customerService.updateCustomer(customerId, customerUpdateDto);
     }
     

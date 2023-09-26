@@ -1,5 +1,6 @@
 package leasing.app.vehicle;
 
+import jakarta.validation.Valid;
 import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;
@@ -24,7 +25,7 @@ public class VehicleController {
     private final VehicleService vehicleService;
 
     @PostMapping
-    public void createVehicle(@RequestBody VehicleCreateDto vehicleCreateDto) {
+    public void createVehicle(@Valid @RequestBody VehicleCreateDto vehicleCreateDto) {
         vehicleService.createVehicle(vehicleCreateDto);
     }
 
@@ -34,7 +35,7 @@ public class VehicleController {
     }
 
     @GetMapping
-    public List<VehicleGetDto> getAllVehicles(){
+    public List<VehicleGetDto> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
 
@@ -44,7 +45,7 @@ public class VehicleController {
     }
 
     @PutMapping("/{vehicleId}")
-    public void updateVehicle(@PathVariable UUID vehicleId, @RequestBody VehicleUpdateDto vehicleUpdateDto){
+    public void updateVehicle(@PathVariable UUID vehicleId, @Valid @RequestBody VehicleUpdateDto vehicleUpdateDto) {
         vehicleService.updateVehicle(vehicleId, vehicleUpdateDto);
     }
 

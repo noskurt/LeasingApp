@@ -1,5 +1,6 @@
 package leasing.app.contract;
 
+import jakarta.validation.Valid;
 import leasing.app.contract.dto.request.ContractCreateDto;
 import leasing.app.contract.dto.request.ContractUpdateDto;
 import leasing.app.contract.dto.response.ContractGetDto;
@@ -24,7 +25,7 @@ public class ContractController {
     private final ContractService contractService;
 
     @PostMapping
-    public void createContract(@RequestBody ContractCreateDto contractCreateDto) {
+    public void createContract(@Valid @RequestBody ContractCreateDto contractCreateDto) {
         contractService.createContract(contractCreateDto);
     }
 
@@ -44,7 +45,7 @@ public class ContractController {
     }
 
     @PutMapping("/{contractId}")
-    public void updateContract(@PathVariable UUID contractId, @RequestBody ContractUpdateDto contractUpdateDto){
+    public void updateContract(@PathVariable UUID contractId, @Valid @RequestBody ContractUpdateDto contractUpdateDto){
         contractService.updateContract(contractId, contractUpdateDto);
     }
 
