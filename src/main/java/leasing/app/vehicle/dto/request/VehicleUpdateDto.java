@@ -20,7 +20,6 @@ public class VehicleUpdateDto {
     private String model;
     @NotNull
     private Integer year;
-    @NotBlank
     private String vin;
     @NotNull
     private BigDecimal price;

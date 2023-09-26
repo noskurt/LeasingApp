@@ -92,4 +92,22 @@ class CreateContractTest extends BaseTest {
 
         assertThat(contract).isEmpty();
     }
+
+    @Test
+    void testCreateContractReturnsBadRequest() throws Exception {
+        Vehicle vehicle = dataCreator.createVehicle();
+        Customer customer = dataCreator.createCustomer();
+
+        ContractCreateDto contractCreateDto = new ContractCreateDto()
+            .setContractNumber(null)
+            .setMonthlyRate(BigDecimal.valueOf(faker.number().randomDouble(2, 100, 1500)))
+            .setCustomerId(customer.getId())
+            .setVehicleId(vehicle.getId());
+
+        performAndPost(mockMvc, status().isBadRequest(), contractCreateDto, URL);
+
+        List<Contract> contracts = contractRepository.findAll();
+
+        assertThat(contracts).isEmpty();
+    }
 }

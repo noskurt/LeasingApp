@@ -66,4 +66,27 @@ class UpdateVehicleTest extends BaseTest {
         assertThat(vehicleRecord.get().getVin()).isEqualTo(vehicle.getVin());
         assertThat(vehicleRecord.get().getPrice()).isEqualTo(vehicle.getPrice());
     }
+
+    @Test
+    void testUpdateVehicleReturnsBadRequest() throws Exception {
+        Vehicle vehicle = dataCreator.createVehicle();
+
+        VehicleUpdateDto vehicleUpdateDto = new VehicleUpdateDto()
+            .setBrand(null)
+            .setModel(null)
+            .setYear(faker.number().numberBetween(1990, 2023))
+            .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
+            .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
+
+        performAndPut(mockMvc, status().isBadRequest(), vehicleUpdateDto, URL, vehicle.getId());
+
+        Optional<Vehicle> vehicleRecord = vehicleRepository.findAll().stream().findFirst();
+
+        assertThat(vehicleRecord).isPresent();
+        assertThat(vehicleRecord.get().getBrand()).isEqualTo(vehicle.getBrand());
+        assertThat(vehicleRecord.get().getModel()).isEqualTo(vehicle.getModel());
+        assertThat(vehicleRecord.get().getYear()).isEqualTo(vehicle.getYear());
+        assertThat(vehicleRecord.get().getVin()).isEqualTo(vehicle.getVin());
+        assertThat(vehicleRecord.get().getPrice()).isEqualTo(vehicle.getPrice());
+    }
 }

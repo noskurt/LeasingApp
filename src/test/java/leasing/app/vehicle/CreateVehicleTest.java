@@ -5,6 +5,7 @@ import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,5 +37,21 @@ class CreateVehicleTest extends BaseTest {
         assertThat(vehicle.get().getYear()).isEqualTo(vehicleCreateDto.getYear());
         assertThat(vehicle.get().getVin()).isEqualTo(vehicleCreateDto.getVin());
         assertThat(vehicle.get().getPrice()).isEqualTo(vehicleCreateDto.getPrice());
+    }
+
+    @Test
+    void testCreateVehicleReturnsBadRequest() throws Exception {
+        VehicleCreateDto vehicleCreateDto = new VehicleCreateDto()
+            .setBrand(null)
+            .setModel(null)
+            .setYear(faker.number().numberBetween(1990, 2023))
+            .setPrice(new BigDecimal(faker.number().numberBetween(10000, 150000)))
+            .setVin(faker.random().nextBoolean() ? faker.vehicle().vin() : null);
+
+        performAndPost(mockMvc, status().isBadRequest(), vehicleCreateDto, URL);
+
+        List<Vehicle> vehicles = vehicleRepository.findAll();
+
+        assertThat(vehicles).isEmpty();
     }
 }

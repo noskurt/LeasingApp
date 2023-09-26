@@ -51,4 +51,23 @@ class UpdateCustomerTest extends BaseTest {
         assertThat(customerRecord.get().getLastName()).isEqualTo(customer.getLastName());
         assertThat(customerRecord.get().getBirthdate()).isEqualTo(customer.getBirthdate());
     }
+
+    @Test
+    void testUpdateCustomerReturnsBadRequest() throws Exception {
+        Customer customer = dataCreator.createCustomer();
+
+        CustomerUpdateDto customerUpdateDto = new CustomerUpdateDto()
+            .setFirstName(null)
+            .setLastName(faker.name().lastName())
+            .setBirthdate(faker.date().birthday().toLocalDateTime().toLocalDate());
+
+        performAndPut(mockMvc, status().isBadRequest(), customerUpdateDto, URL, customer.getId());
+
+        Optional<Customer> customerRecord = customerRepository.findAll().stream().findFirst();
+
+        assertThat(customerRecord).isPresent();
+        assertThat(customerRecord.get().getFirstName()).isEqualTo(customer.getFirstName());
+        assertThat(customerRecord.get().getLastName()).isEqualTo(customer.getLastName());
+        assertThat(customerRecord.get().getBirthdate()).isEqualTo(customer.getBirthdate());
+    }
 }

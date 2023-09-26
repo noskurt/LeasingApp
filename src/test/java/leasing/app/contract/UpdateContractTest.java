@@ -147,4 +147,30 @@ class UpdateContractTest extends BaseTest {
         assertThat(contractRecord.get().getVehicle().getId()).isEqualTo(contract.getVehicle().getId());
         assertThat(contractRecord.get().getCustomer().getId()).isEqualTo(contract.getCustomer().getId());
     }
+
+    @Test
+    void testUpdateContractReturnsBadRequest() throws Exception {
+        Vehicle vehicle = dataCreator.createVehicle();
+        Customer customer = dataCreator.createCustomer();
+        Contract contract = dataCreator.createContract(vehicle, customer);
+
+        Vehicle candidateVehicle = dataCreator.createVehicle();
+        Customer candidateCustomer = dataCreator.createCustomer();
+
+        ContractUpdateDto contractUpdateDto = new ContractUpdateDto()
+            .setContractNumber(new BigDecimal(faker.number().numberBetween(100000, 999999)))
+            .setMonthlyRate(null)
+            .setCustomerId(candidateCustomer.getId())
+            .setVehicleId(candidateVehicle.getId());
+
+        performAndPut(mockMvc, status().isBadRequest(), contractUpdateDto, URL, contract.getId());
+
+        Optional<Contract> contractRecord = contractRepository.findAll().stream().filter(e -> e.getId().equals(contract.getId())).findFirst();
+
+        assertThat(contractRecord).isPresent();
+        assertThat(contractRecord.get().getContractNumber()).isEqualTo(contract.getContractNumber());
+        assertThat(contractRecord.get().getMonthlyRate()).isEqualTo(contract.getMonthlyRate());
+        assertThat(contractRecord.get().getVehicle().getId()).isEqualTo(contract.getVehicle().getId());
+        assertThat(contractRecord.get().getCustomer().getId()).isEqualTo(contract.getCustomer().getId());
+    }
 }
