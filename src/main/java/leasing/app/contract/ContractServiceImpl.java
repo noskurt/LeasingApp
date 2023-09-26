@@ -28,8 +28,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public void createContract(ContractCreateDto contractCreateDto) {
-        boolean isVehicleAssigned = contractRepository.existsByVehicleId(contractCreateDto.getVehicleId());
-        if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(contractCreateDto.getVehicleId());
+        checkVehicleAssignment(contractCreateDto.getVehicleId());
 
         Vehicle vehicle = vehicleRepository.findById(contractCreateDto.getVehicleId()).orElseThrow(() -> new VehicleNotFoundException(contractCreateDto.getVehicleId()));
         Customer customer = customerRepository.findById(contractCreateDto.getCustomerId()).orElseThrow(() -> new CustomerNotFoundException(contractCreateDto.getCustomerId()));
@@ -61,8 +60,7 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = contractRepository.findById(contractId).orElseThrow(() -> new ContractNotFoundException(contractId));
 
         if (contract.getVehicle().getId() != contractUpdateDto.getVehicleId()) {
-            boolean isVehicleAssigned = contractRepository.existsByVehicleId(contractUpdateDto.getVehicleId());
-            if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(contractUpdateDto.getVehicleId());
+            checkVehicleAssignment(contractUpdateDto.getVehicleId());
         }
 
         Vehicle vehicle = vehicleRepository.findById(contractUpdateDto.getVehicleId()).orElseThrow(() -> new VehicleNotFoundException(contractUpdateDto.getVehicleId()));
@@ -70,5 +68,10 @@ public class ContractServiceImpl implements ContractService {
 
         Contract updatedContract = contractMapper.toContract(contract, vehicle, customer, contractUpdateDto);
         contractRepository.save(updatedContract);
+    }
+
+    private void checkVehicleAssignment(UUID vehicleId) {
+        boolean isVehicleAssigned = contractRepository.existsByVehicleId(vehicleId);
+        if (isVehicleAssigned) throw new VehicleAlreadyAssignedToContractException(vehicleId);
     }
 }
