@@ -2,8 +2,8 @@ package leasing.app.vehicle;
 
 import jakarta.validation.Valid;
 import leasing.app.meta_data.MetaDataService;
-import leasing.app.meta_data.dto.response.BrandGetDto;
-import leasing.app.meta_data.dto.response.ModelGetDto;
+import leasing.app.meta_data.dto.BrandGetDto;
+import leasing.app.meta_data.dto.ModelGetDto;
 import leasing.app.vehicle.dto.request.VehicleCreateDto;
 import leasing.app.vehicle.dto.request.VehicleUpdateDto;
 import leasing.app.vehicle.dto.response.VehicleGetDto;

@@ -1,7 +1,7 @@
 package leasing.app.meta_data;
 
-import leasing.app.meta_data.dto.response.BrandGetDto;
-import leasing.app.meta_data.dto.response.ModelGetDto;
+import leasing.app.meta_data.dto.BrandGetDto;
+import leasing.app.meta_data.dto.ModelGetDto;
 
 import java.util.List;
 import java.util.UUID;

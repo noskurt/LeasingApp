@@ -2,7 +2,7 @@ package leasing.app.vehicle;
 
 import leasing.app.BaseTest;
 import leasing.app.meta_data.Brand;
-import leasing.app.meta_data.dto.response.BrandGetDto;
+import leasing.app.meta_data.dto.BrandGetDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

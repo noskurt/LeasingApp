@@ -27,5 +27,8 @@ while :; do
     shift
 done
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+cd "$SCRIPT_DIR"
 cd ../docker && PROFILE="$PROFILE" docker-compose up postgres -d
 cd ../ && ./gradlew test

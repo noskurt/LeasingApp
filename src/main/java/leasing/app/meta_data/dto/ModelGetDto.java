@@ -1,4 +1,4 @@
-package leasing.app.meta_data.dto.response;
+package leasing.app.meta_data.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
